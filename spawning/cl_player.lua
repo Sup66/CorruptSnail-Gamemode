@@ -96,5 +96,5 @@ AddEventHandler("onClientGameTypeStart", function()
     Wait(3000)
     
     Utils.LoadInteriors()
-    SendNotification("CHAR_LESTER_DEATHWISH", 1, "CorruptSnail", "", GetLabelText("collision_9a0v4k"))
+    SendNotification("CHAR_LESTER_DEATHWISH", 1, "SwitZ", "", "Echipa ~r~SwitHub ~w~iti ureaza bun venit!")
 end)

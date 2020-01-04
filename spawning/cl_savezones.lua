@@ -3,7 +3,7 @@ local GUARD_MODEL = GetHashKey("u_m_y_juggernaut_01")
 local GUARDSPAWN_ID_DECOR = "_GUARD_SPAWNID"
 DecorRegister(GUARDSPAWN_ID_DECOR, 3)
 
-AddTextEntry("SAFEZONE_BLIP_NAME", "Safezone")
+AddTextEntry("SAFEZONE_BLIP_NAME", "Refugiu")
 
 local function SpawnGuard(guardSpawn)
     local guard = Utils.CreatePed(GUARD_MODEL, 25, vector3(guardSpawn[1], guardSpawn[2], guardSpawn[3]), guardSpawn[4])
@@ -31,7 +31,7 @@ local function SpawnGuard(guardSpawn)
     DecorSetInt(guard, GUARDSPAWN_ID_DECOR, guardSpawn.Id)
 end
 
-local function HandleGuardSpawning()
+function HandleGuardSpawning()
     local untilPause = 10
     local spawnedIds = {}
     for ped, pedData in pairs(g_peds) do
@@ -55,6 +55,7 @@ local function HandleGuardSpawning()
 
     for _, safezone in ipairs(Config.Spawning.Safezones.SAFEZONES) do
         for _, guardSpawn in ipairs(safezone.GuardSpawns) do
+            
             if guardSpawn.Id and not spawnedIds[guardSpawn.Id] then
                 SpawnGuard(guardSpawn)
             end
@@ -62,12 +63,9 @@ local function HandleGuardSpawning()
     end
 end
 
-Utils.CreateLoadedInThread(function()
-    Wait(250)
-
-    if Player.IsSpawnHost() then
-        HandleGuardSpawning()
-    end
+RegisterNetEvent("GuardSpawn")
+AddEventHandler("GuardSpawn", function()
+    HandleGuardSpawning()
 end)
 
 Citizen.CreateThread(function()
